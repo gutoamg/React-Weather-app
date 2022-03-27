@@ -1,6 +1,5 @@
 {
   "name": "react-weather-app",
-  "proxy": "http://localhost:7600",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
