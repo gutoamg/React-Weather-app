@@ -1,14 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
-import './styles.css'
+import './typecity/typecitystyles.css'
+import loadingIcon from "./Loading_icon.png";
 
-
-
-
-
-
-
-const UserLocation = ({ geolocation_update, update_city_name }) => {
+const UserLocation = ({ geolocation_update, update_city_name, backendData }) => {
 	var firstRender = useRef(true);
+	var textInput = useRef(null);
 	const [inputValue, setInputValue] = useState('');
 	const [geolocationClassName, setGeolocationClassName] = useState('geoloc-err-hidden');
 	const [userUpdatedLocation, setUserUpdatedLocation] = useState({
@@ -16,6 +12,8 @@ const UserLocation = ({ geolocation_update, update_city_name }) => {
 		lon: undefined
 	});
 	const [updater, setUpdater] = useState(1);
+	const [subtitleColor, setSubtitleColor] = useState('black');
+	const [isLoading, setIsLoading] = useState(false);
 
 	const update_input_value = (event) => {
 		setInputValue(event.target.value);
@@ -32,7 +30,7 @@ const UserLocation = ({ geolocation_update, update_city_name }) => {
 	// If enter is pressed and there is an input,
 	// the input value is searched
 	const search_input_value = (event) => {
-		if (event.keyCode === 13 && inputValue === '') {
+		if (event.keyCode === 13 && textInput.current === '') {
 			return;
 		}
 		
@@ -42,8 +40,29 @@ const UserLocation = ({ geolocation_update, update_city_name }) => {
 				lat: undefined,
 				long: undefined
 			});
+			setIsLoading(true);
 		}
 	}
+
+	// Clears input field or search what's already there
+	const input_clicked = (event) => {
+		if (event.target.className === "get-location__search-bar__search") {
+			if (textInput.current === "")
+				return;
+			update_city_name(inputValue);
+			geolocation_update({
+				lat: undefined,
+				long: undefined
+			});
+			setIsLoading(true);
+		} else if (event.target.className === "get-location__search-bar__clear") {
+			textInput.current.focus();
+			textInput.current.value = "";
+			setInputValue("");
+			update_city_name("");
+		}
+	}
+
 	// Get new geolocation except for the first render
 	useEffect(() => {
 		// const get_current_location = () => {
@@ -83,10 +102,6 @@ const UserLocation = ({ geolocation_update, update_city_name }) => {
 				lat: coordinates.latitude,
 				lon: coordinates.longitude
 			}
-			console.log('Your current position is:');
-			console.log(`Latitude : ${coordinates.latitude}`);
-			console.log(`Longitude: ${coordinates.longitude}`);
-			console.log(`More or less ${coordinates.accuracy} meters.`);
 			setUserUpdatedLocation(userCoordinates);
 		}
 		const location__failure = (err) => {
@@ -98,6 +113,10 @@ const UserLocation = ({ geolocation_update, update_city_name }) => {
 			setUserUpdatedLocation(userCoordinates);
 			update_city_name("");
 			geolocation_error_anim();
+			textInput.current.focus();
+			setTimeout(() => {// Make loading button disappear
+				setIsLoading(false);
+			}, 5000);
 		}
 		const locationOptions = {
 			timeout: 20000 // The response can take up to 20 seconds
@@ -111,32 +130,54 @@ const UserLocation = ({ geolocation_update, update_city_name }) => {
 		if (!firstRender.current) {
 			geolocation_update(userUpdatedLocation);
 			update_city_name("");
+			setIsLoading(true);
 		}
 		firstRender.current = false
 	}, [userUpdatedLocation]);
+
+
+	// When backend data changes
+	useEffect(() => {
+		if (backendData.weatherToday === 'Strange name input' || backendData.nextDaysWeather === 'Strange name input')
+			setSubtitleColor('rgb(248, 79, 79)');
+		else
+			setSubtitleColor('black');
+		setIsLoading(false);
+	}, [backendData]);
 	
 
 	return (
-		<div>
-			<h1>Type a city</h1>
-			<div className="search-bar">
+		<div className="get-location">
+			<h1 className="get-location__type-city">Type a city</h1>
+			<p className="get-location__follow-model" style={{color: subtitleColor}}>
+				Follow the model 'São Paulo', including capital letters, spaces and accents
+			</p>
+			<div className="get-location__search-bar" onClick={input_clicked}>
 					<input 
-						type="text" 
-						name="Search image" 
-						placeholder="Search image" 
 						id="search-input"
-						className="search-bar__input"
+						ref={textInput}
+						type="text" 
+						name="Discover city weather" 
+						placeholder="Type a city name" 
+						className="get-location__search-bar__input"
 						onChange={update_input_value}
 						onKeyUp={search_input_value}
 					/>
-                <label className="search-bar__label" htmlFor="search-input">
+                <label className="get-location__search-bar__label" htmlFor="search-input">
 				</label>
-                <button className="search-bar__search" type="submit"></button>
-                <button className="search-bar__clear" type="submit"></button>
+                <button className="get-location__search-bar__search" type="submit"></button>
+                <button className="get-location__search-bar__clear" type="submit"></button>
             </div>
-			<h3>OR</h3>
+			<h3 className='get-location__or'>or instead...</h3>
+			<button className='get-location__button' onClick={ () => setUpdater(updater + 1) }>Get your weather</button>
 			<p className={geolocationClassName}>Your browser blocked location tracking, please check your permissions and settings or type city above</p> 
-			<button style={{width: '200px', height: '40px', backgroundColor: 'lightblue'}} onClick={ () => setUpdater(updater + 1) }>Get your location</button>
+			{
+				isLoading
+				? <div className="get-location__loading-icon-container">
+					  <img src={loadingIcon} alt="Loading icon" className="get-location__loading-icon" />
+				  </div> 
+				:<p style={{display: 'none'}}></p>
+			}
 		</div>
 	)
 }

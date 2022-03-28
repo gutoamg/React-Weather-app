@@ -1,0 +1,16 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.App {
+  width: 100%;
+  height: auto;
+  padding-bottom: 1px;
+  position: relative;
+  background-color: #1f1f1f;
+  text-align: center;
+}
+/*# sourceMappingURL=appstyles.css.map */

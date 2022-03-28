@@ -1,7 +1,8 @@
-import './styles.css';
+import './app/appstyles.css';
 import axios from 'axios';
 import { useEffect, useRef, useState } from 'react'
 import UserLocation from './UserLocation';
+import Weather from './Weather';
 
 
 
@@ -17,6 +18,10 @@ function App() {
 		lon: undefined
 	});
 	const [cityName, setCityName] = useState('London');
+	const[backendData, setBackendData] = useState({
+		weatherToday: undefined,
+		nextDaysWeather: undefined
+	});
 
 	
 	
@@ -64,7 +69,7 @@ function App() {
 	// Send data to backend and retrieve information
 	// Only runs from second render on
 	useEffect(() => {
-		const make_backend_request = async () => {
+		const make_backend_request = async (userLocation, cityName) => {
 			const fetchOptions = {
 				method: "POST",
 				withCredentials: true,
@@ -79,24 +84,28 @@ function App() {
 					city: cityName
 				}
 			};
-			const sendData = await axios.post(`http://localhost:7600/`, fetchOptions);
-			// var receiveData = await sendData.json();
-			console.log(sendData.data);
-			return sendData;
+			const returnedBackData = await axios.post(`http://localhost:7600/`, fetchOptions);
+			// console.log(returnedBackData.data);
+			return returnedBackData.data;
 		};
+
+		const update_backend_data = async () => {
+			const responseFromBackend = await make_backend_request(userLocation, cityName);
+			setBackendData(responseFromBackend);
+		}
 		
 		if (firstRenderApp.current === true) {
 			firstRenderApp.current = false;
 			return;
 		}
 		
-		// If there is no data to send to backend, return
+		// If there is no data to send to backend, return to avoid new http requests
 		if (cityName === "" && userLocation.lat === undefined && userLocation.lon === undefined)
 			return;
 		
-		make_backend_request();
-		
+		update_backend_data();
 
+		console.log(`Fake backend request with location:`, userLocation, `and city: ${cityName}`, `and backendData ${backendData}`);
 	}, [userLocation, cityName]);
 
 
@@ -106,8 +115,16 @@ function App() {
 			<UserLocation 
 				geolocation_update={ newLocation => setUserLocation(newLocation) } 
 				update_city_name={ newName => setCityName(newName) } 
-			/>
-
+				backendData={backendData}
+			/> 
+			{
+				(backendData.weatherToday !==  undefined 
+				&& backendData.weatherToday !== 'Strange name input' 
+				&& backendData.weatherToday !== 'Server error')
+				?<Weather backendData={backendData} />
+				:''
+			}
+			{/* <Weather backendData={backendData} /> */}
 		</div>
 	);
 }
