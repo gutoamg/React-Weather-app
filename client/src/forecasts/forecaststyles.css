@@ -1,0 +1,166 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.forecasts-container {
+  width: 100%;
+  height: auto;
+  min-height: 50vh;
+  position: relative;
+  padding: 35px 0px;
+  background-color: #202d83;
+}
+
+.forecasts-container .the-forecasts {
+  width: 100%;
+  position: relative;
+  margin-top: 35px;
+  margin-bottom: 30px;
+  font-family: "Playfair Display", serif;
+  line-height: 80px;
+  font-size: 70px;
+  font-weight: 600;
+  text-align: center;
+  color: #020411;
+}
+
+.daily-info-container {
+  width: 90%;
+  max-width: 700px;
+  height: auto;
+  position: relative;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  top: 0px;
+  left: 50%;
+  margin-top: 20px;
+}
+
+.daily-info-container .week-day {
+  width: 100%;
+  position: relative;
+  margin-top: 5px;
+  font-family: "Playfair Display", serif;
+  line-height: 25px;
+  font-size: 22px;
+  font-weight: 500;
+  text-align: center;
+  color: #020411;
+}
+
+.daily-info-container .forecast-info {
+  width: 100%;
+  height: 40px;
+  background-color: #020411;
+  border-radius: 5px;
+  margin-top: 6px;
+}
+
+.daily-info-container .forecast-info .forecast-info-temp {
+  display: inline-block;
+  position: absolute;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  left: 17%;
+  font-family: "Playfair Display", serif;
+  line-height: 40px;
+  font-size: 20px;
+  font-weight: 400;
+  text-align: center;
+  color: #c2c2c2;
+}
+
+.daily-info-container .forecast-info .forecast-info-weatherDesc {
+  display: inline-block;
+  position: absolute;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  left: 42%;
+  font-family: "Playfair Display", serif;
+  line-height: 40px;
+  font-size: 18px;
+  font-weight: 400;
+  text-align: center;
+  color: #c2c2c2;
+}
+
+.daily-info-container .forecast-info .forecast-info-feesLike {
+  width: 35%;
+  display: inline-block;
+  position: absolute;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  left: 75%;
+  font-family: "Playfair Display", serif;
+  line-height: 40px;
+  font-size: 18px;
+  font-weight: 400;
+  text-align: center;
+  color: #c2c2c2;
+}
+
+@media screen and (max-width: 600px) {
+  .forecasts-container .the-forecasts {
+    line-height: 75px;
+    font-size: 65px;
+  }
+  .daily-info-container {
+    width: 95%;
+    max-width: 700px;
+    height: auto;
+    position: relative;
+    -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
+    top: 0px;
+    left: 50%;
+    margin-top: 20px;
+  }
+  .daily-info-container .week-day {
+    width: 100%;
+    position: relative;
+    margin-top: 5px;
+    font-family: "Playfair Display", serif;
+    line-height: 23px;
+    font-size: 20px;
+    font-weight: 500;
+    text-align: center;
+    color: #020411;
+  }
+  .daily-info-container .forecast-info {
+    margin-top: 6px;
+  }
+  .daily-info-container .forecast-info .forecast-info-temp {
+    left: 14%;
+    font-size: 18px;
+    font-weight: 400;
+  }
+  .daily-info-container .forecast-info .forecast-info-weatherDesc {
+    display: inline-block;
+    position: absolute;
+    -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
+    left: 40%;
+    font-family: "Playfair Display", serif;
+    font-size: 16px;
+    font-weight: 400;
+    text-align: center;
+    color: #c2c2c2;
+  }
+  .daily-info-container .forecast-info .forecast-info-feesLike {
+    width: 35%;
+    display: inline-block;
+    position: absolute;
+    -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
+    left: 75%;
+    font-family: "Playfair Display", serif;
+    font-size: 16px;
+    font-weight: 400;
+    text-align: center;
+    color: #c2c2c2;
+  }
+}
+/*# sourceMappingURL=forecaststyles.css.map */

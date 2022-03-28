@@ -10,7 +10,6 @@ import Weather from './Weather';
 
 
 
-
 function App() {
 	var firstRenderApp = useRef(true);
 	const [userLocation, setUserLocation] = useState({

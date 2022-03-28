@@ -16,6 +16,8 @@ const PORT = process.env.PORT || 4000;
 app.use(express.json());
 app.use(cors());
 
+// https://api.openweathermap.org/data/2.5/onecall?lat=0&lon=0&units=metric&appid=afdc57a19766650b6ba9459fa9606f37
+// https://api.openweathermap.org/data/2.5/onecall?lat=0&lon=0&appid=afdc57a19766650b6ba9459fa9606f37
 
 const get_current_weather = async (coordinates) => {
     var curResponse = false;
@@ -41,7 +43,7 @@ const get_forecast = async (coordinates) => {
     var forecastWeather = false;
 
     try {
-        forResponse = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${process.env.API_KEY}`);
+        forResponse = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${process.env.API_KEY}`);
         forecastWeather = await forResponse.json();
 
         if (forResponse.status < 200 || forResponse.status > 299)// Outside this scope is an error

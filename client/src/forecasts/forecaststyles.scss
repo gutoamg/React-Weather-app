@@ -1,0 +1,175 @@
+$card-spaces: 10px;
+$search-button-width: 40px;
+$main-font: 'Playfair Display', serif;
+$dark-main-color:  rgb(32, 45, 131);
+$main-text-color: #020411;
+$secundary-text-color: #c2c2c2;
+
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+.forecasts-container {
+    width: 100%;
+    height: auto;
+    min-height: 50vh;
+    position: relative;
+    padding: 35px 0px;
+    background-color: $dark-main-color;
+
+    .the-forecasts {
+        width: 100%;
+        position: relative;
+        margin-top: 35px;
+        margin-bottom: 30px;
+        font-family: $main-font;
+        line-height: 80px;
+        font-size: 70px;
+        font-weight: 600;
+        text-align: center;
+        color: $main-text-color;
+    }
+}
+
+.daily-info-container {
+    width: 90%;
+    max-width: 700px;
+    height: auto;
+    position: relative;
+    transform: translateX(-50%);
+    top: 0px;
+    left: 50%;
+    margin-top: 20px;
+    
+
+    .week-day {
+        width: 100%;
+        position: relative;
+        margin-top: 5px;
+        font-family: $main-font;
+        line-height: 25px;
+        font-size: 22px;
+        font-weight: 500;
+        text-align: center;
+        color: $main-text-color;
+    }
+
+    .forecast-info {
+        width: 100%;
+        height: 40px;
+        background-color: rgb(2, 4, 17);
+        border-radius: 5px;
+        margin-top: 6px;
+
+        .forecast-info-temp {
+            display: inline-block;
+            position: absolute;
+            transform: translateX(-50%);
+            left: 17%;
+            font-family: $main-font;
+            line-height: 40px;
+            font-size: 20px;
+            font-weight: 400;
+            text-align: center;
+            color: $secundary-text-color;
+        }
+        
+        .forecast-info-weatherDesc {
+            display: inline-block;
+            position: absolute;
+            transform: translateX(-50%);
+            left: 42%;
+            font-family: $main-font;
+            line-height: 40px;
+            font-size: 18px;
+            font-weight: 400;
+            text-align: center;
+            color: $secundary-text-color;
+        }
+
+        .forecast-info-feesLike {
+            width: 35%;
+            display: inline-block;
+            position: absolute;
+            transform: translateX(-50%);
+            left: 75%;
+            // margin-left: 30px;
+            font-family: $main-font;
+            line-height: 40px;
+            font-size: 18px;
+            font-weight: 400;
+            text-align: center;
+            color: $secundary-text-color;
+        }
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .forecasts-container {
+        .the-forecasts {
+            line-height: 75px;
+            font-size: 65px;
+        }
+    }
+    
+    .daily-info-container {
+        width: 95%;
+        max-width: 700px;
+        height: auto;
+        position: relative;
+        transform: translateX(-50%);
+        top: 0px;
+        left: 50%;
+        margin-top: 20px;
+        
+    
+        .week-day {
+            width: 100%;
+            position: relative;
+            margin-top: 5px;
+            font-family: $main-font;
+            line-height: 23px;
+            font-size: 20px;
+            font-weight: 500;
+            text-align: center;
+            color: $main-text-color;
+        }
+    
+        .forecast-info {
+            margin-top: 6px;
+    
+            .forecast-info-temp {
+                left: 14%;
+                font-size: 18px;
+                font-weight: 400;
+            }
+            
+            .forecast-info-weatherDesc {
+                display: inline-block;
+                position: absolute;
+                transform: translateX(-50%);
+                left: 40%;
+                font-family: $main-font;
+                font-size: 16px;
+                font-weight: 400;
+                text-align: center;
+                color: $secundary-text-color;
+            }
+    
+            .forecast-info-feesLike {
+                width: 35%;
+                display: inline-block;
+                position: absolute;
+                transform: translateX(-50%);
+                left: 75%;
+                font-family: $main-font;
+                font-size: 16px;
+                font-weight: 400;
+                text-align: center;
+                color: $secundary-text-color;
+            }
+        }
+    }
+}

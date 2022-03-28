@@ -12,7 +12,7 @@ const UserLocation = ({ geolocation_update, update_city_name, backendData }) => 
 		lon: undefined
 	});
 	const [updater, setUpdater] = useState(1);
-	const [subtitleColor, setSubtitleColor] = useState('black');
+	const [subtitleColor, setSubtitleColor] = useState('white');
 	const [isLoading, setIsLoading] = useState(false);
 
 	const update_input_value = (event) => {
@@ -141,7 +141,7 @@ const UserLocation = ({ geolocation_update, update_city_name, backendData }) => 
 		if (backendData.weatherToday === 'Strange name input' || backendData.nextDaysWeather === 'Strange name input')
 			setSubtitleColor('rgb(248, 79, 79)');
 		else
-			setSubtitleColor('black');
+			setSubtitleColor('white');
 		setIsLoading(false);
 	}, [backendData]);
 	
@@ -169,7 +169,7 @@ const UserLocation = ({ geolocation_update, update_city_name, backendData }) => 
                 <button className="get-location__search-bar__clear" type="submit"></button>
             </div>
 			<h3 className='get-location__or'>or instead...</h3>
-			<button className='get-location__button' onClick={ () => setUpdater(updater + 1) }>Get your weather</button>
+			<button className='get-location__button' onClick={ () => setUpdater(updater + 1) }>From your location</button>
 			<p className={geolocationClassName}>Your browser blocked location tracking, please check your permissions and settings or type city above</p> 
 			{
 				isLoading
