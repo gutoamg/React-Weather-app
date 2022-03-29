@@ -27,18 +27,27 @@ const convert_from_unix_time = unixTime => {
 	// multiplied by 1000 so that the argument is in milliseconds, not seconds.
 	var date = new Date(unixTime * 1000);
 	// Hours part from the timestamp
-	var hours = date.getHours();
+	let hourFormat = new Intl.DateTimeFormat("en" , {
+		timeStyle: "short"
+	});
+	var hours = hourFormat.format(date);
 	// Minutes part from the timestamp
 	var minutes = "0" + date.getMinutes();
 	// Seconds part from the timestamp
 	var seconds = "0" + date.getSeconds();
 
+	var humanFormat = date.toLocaleString(); //2019-12-9 10:30:15 format
+	var weekDay = date.toLocaleString("en-US", {weekday: "long"}) // Monday
+	var month = date.toLocaleString("en-US", {month: "long"}) // December
+	var dayNumber = date.toLocaleString("en-US", {day: "numeric"}) // 9
+
 	// Will display time in 10:30:23 format
 	// var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
 	return {
-		hours: hours,
-		minutes: minutes,
-		seconds: seconds
+		weekDay: weekDay,
+		month: month,
+		dayNumber: dayNumber,
+		hour: hours
 	}
 }
 

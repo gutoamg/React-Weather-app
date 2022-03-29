@@ -8,8 +8,6 @@ const Forecasts = ({ backendData, tempScale, convert_temp_to, convert_from_unix_
 		setForecastData(backendData.nextDaysWeather);
 	}, [backendData]);
 
-	// console.log(convert_from_unix_time(1647345600));
-	console.log(forecastData.list);
 
 	return (
 		<div className='forecasts-container'>
@@ -19,10 +17,11 @@ const Forecasts = ({ backendData, tempScale, convert_temp_to, convert_from_unix_
 				forecastData.list.map(day => {
 					const temperature = convert_temp_to(day.main.temp, tempScale);
 					const tempSensation = convert_temp_to(day.main.feels_like, tempScale);
+					const time = convert_from_unix_time(day.dt);
 
 					return(
 						<div className="daily-info-container" key={day.dt}>
-							<h3 className='week-day'>Thursday</h3>
+							<h3 className='week-day'>{time.weekDay}, {time.month}  {time.dayNumber}  at  {time.hour}</h3>
 							<div className="forecast-info">
 								<h2 className="forecast-info-temp">
 									{temperature}{tempScale === 'Celsius' ?'°C' :'°F'}
