@@ -9,18 +9,18 @@ import Weather from './Weather';
 
 
 
-
 function App() {
 	var firstRenderApp = useRef(true);
 	const [userLocation, setUserLocation] = useState({
 		lat: undefined,
 		lon: undefined
 	});
-	const [cityName, setCityName] = useState('London');
+	const [cityName, setCityName] = useState('');
 	const[backendData, setBackendData] = useState({
 		weatherToday: undefined,
 		nextDaysWeather: undefined
 	});
+	const [iosError, setIosError] = useState(undefined);
 
 	
 	
@@ -71,10 +71,11 @@ function App() {
 		const make_backend_request = async (userLocation, cityName) => {
 			const fetchOptions = {
 				method: "POST",
+				// url: `http://localhost:7600/` + '?nocache=' + new Date().getTime(), // Safari fix
 				withCredentials: true,
 				mode: 'cors',
 				headers: {
-					'Access-Control-Allow-Origin': '*',
+					// 'Access-Control-Allow-Origin': 'http://localhost:3000/',
 					'Content-Type': 'application/json',
 					'Accept': 'application/json'
 				},
@@ -83,13 +84,36 @@ function App() {
 					city: cityName
 				}
 			};
-			const returnedBackData = await axios.post(`http://localhost:7600/`, fetchOptions);
-			// console.log(returnedBackData.data);
+			var returnedBackData = {};
+			try {
+				returnedBackData = await axios.post(`http://localhost:7600/`, fetchOptions);
+				// returnedBackData = returnedBackData.json();
+			} catch (error) { // If there is an error in the POST process
+				setIosError(`${error}`);
+				console.log(iosError);
+				returnedBackData = { 
+					data: { 
+						weatherToday: 'Post request error', 
+						nextDaysWeather: 'Post request error' 
+					}
+				};
+			}
+
+			// if (returnedBackData.status < 200 || returnedBackData.status > 299) 
+			// 	returnedBackData = { 
+			// 		data: { 
+			// 			weatherToday: 'Post request error', 
+			// 			nextDaysWeather: 'Post request error' 
+			// 		}
+			// 	};
+			
 			return returnedBackData.data;
 		};
 
 		const update_backend_data = async () => {
 			const responseFromBackend = await make_backend_request(userLocation, cityName);
+			console.log(responseFromBackend);
+			// if (responseFromBackend.status)
 			setBackendData(responseFromBackend);
 		}
 		
@@ -115,11 +139,17 @@ function App() {
 				geolocation_update={ newLocation => setUserLocation(newLocation) } 
 				update_city_name={ newName => setCityName(newName) } 
 				backendData={backendData}
+				iosError={ iosError }
 			/> 
 			{
 				(backendData.weatherToday !==  undefined 
 				&& backendData.weatherToday !== 'Strange name input' 
-				&& backendData.weatherToday !== 'Server error')
+				&& backendData.weatherToday !== 'Server error'
+				&& backendData.weatherToday !== 'Post request error'
+				&& backendData.nextDaysWeather !==  undefined 
+				&& backendData.nextDaysWeather !== 'Strange name input' 
+				&& backendData.nextDaysWeather !== 'Server error'
+				&& backendData.nextDaysWeather !== 'Post request error')
 				?<Weather backendData={backendData} />
 				:''
 			}

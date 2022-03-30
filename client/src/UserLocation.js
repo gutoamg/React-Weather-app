@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import './typecity/typecitystyles.css'
 import loadingIcon from "./Loading_icon.png";
 
-const UserLocation = ({ geolocation_update, update_city_name, backendData }) => {
+const UserLocation = ({ geolocation_update, update_city_name, backendData, iosError }) => {
 	var firstRender = useRef(true);
 	var textInput = useRef(null);
 	const [inputValue, setInputValue] = useState('');
@@ -14,6 +14,7 @@ const UserLocation = ({ geolocation_update, update_city_name, backendData }) => 
 	const [updater, setUpdater] = useState(1);
 	const [subtitleColor, setSubtitleColor] = useState('white');
 	const [isLoading, setIsLoading] = useState(false);
+	const [httpPostReqStatus, setHttpPostReqStatus] = useState('success');
 
 	const update_input_value = (event) => {
 		setInputValue(event.target.value);
@@ -142,6 +143,10 @@ const UserLocation = ({ geolocation_update, update_city_name, backendData }) => 
 			setSubtitleColor('rgb(248, 79, 79)');
 		else
 			setSubtitleColor('white');
+		if (backendData.weatherToday === 'Post request error' || backendData.nextDaysWeather === 'Post request error')
+			setHttpPostReqStatus('failure');
+		else
+			setHttpPostReqStatus('success');
 		setIsLoading(false);
 	}, [backendData]);
 	
@@ -171,6 +176,7 @@ const UserLocation = ({ geolocation_update, update_city_name, backendData }) => 
 			<h3 className='get-location__or'>or instead...</h3>
 			<button className='get-location__button' onClick={ () => setUpdater(updater + 1) }>From your location</button>
 			<p className={geolocationClassName}>Your browser blocked location tracking, please check your permissions and settings or type city above</p> 
+			<p className={httpPostReqStatus === 'success' ? 'geoloc-err-hidden' : 'geoloc-err-showing'}>Server error, try again :(</p> 
 			{
 				isLoading
 				? <div className="get-location__loading-icon-container">
@@ -178,6 +184,7 @@ const UserLocation = ({ geolocation_update, update_city_name, backendData }) => 
 				  </div> 
 				:<p style={{display: 'none'}}></p>
 			}
+			<p>{iosError}</p>
 		</div>
 	)
 }

@@ -87,7 +87,8 @@ const Weather = ({ backendData }) => {
 				backendData={ backendData } 
 				tempScale={ tempScale } 
 				convert_temp_to={ convert_temp_to } 
-				convert_from_unix_time={ convert_from_unix_time } />
+				convert_from_unix_time={ convert_from_unix_time } 
+			/>
 		</div>
 	)
 }

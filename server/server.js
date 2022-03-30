@@ -12,12 +12,26 @@ import dotenv from "dotenv";
 dotenv.config();
 const PORT = process.env.PORT || 4000;
 
-// app.use(express.static(`${__dirname}/public`));
 app.use(express.json());
 app.use(cors());
 
-// https://api.openweathermap.org/data/2.5/onecall?lat=0&lon=0&units=metric&appid=afdc57a19766650b6ba9459fa9606f37
-// https://api.openweathermap.org/data/2.5/onecall?lat=0&lon=0&appid=afdc57a19766650b6ba9459fa9606f37
+// app.use(function(req, res, next) {
+//     res.setHeader("Access-Control-Allow-Origin", "*");
+//     res.setHeader("Access-Control-Allow-Credentials", "true");
+//     res.setHeader(
+//     "Access-Control-Allow-Methods",
+//     "GET,HEAD,OPTIONS,POST,PUT,DELETE"
+//     );
+//     res.setHeader(
+//     "Access-Control-Allow-Headers",
+//     "Origin,Cache-Control,Accept,X-Access-Token ,X-Requested-With, Content-Type, Access-Control-Request-Method"
+//     );
+//     if (req.method === "OPTIONS") {
+//     return res.status(200).end();
+//     }
+//     next();
+//     });
+
 
 const get_current_weather = async (coordinates) => {
     var curResponse = false;
@@ -94,37 +108,10 @@ const get_coords_by_cityname = async (cityName) => {
     return cityCoordinates;
 };
 
-// MAKE UPDATE EVERY 3 HOURS - THATS WHEN THEIR DATABASE UPDATES
-
-// Forecast by city name
-// api.openweathermap.org/data/2.5/forecast?q={CITY_NAME}?units=metric,us&appid={API_ID}
-
-// City name to coords
-// http://api.openweathermap.org/geo/1.0/direct?q=London&appid=afdc57a19766650b6ba9459fa9606f37
-
-const test = async () => {
-    // var respo = await get_coords_by_cityname('London');
-    // console.log(respo);
-
-    var respo = await get_current_weather({lat: 200, lon: -180});
-    console.log(respo);
-}
-// test();
-
-
 
 app.post('/', async (req, res) => {
-    res.set('Access-Control-Allow-Origin', '*');
+    res.set('Access-Control-Allow-Origin', 'http://localhost:3000');
 
-    // if (req.query.dataOrigin === 'input') {
-    //     const cityCoords = get_coords_by_cityname(req.city);
-    //     console.log(req);
-    // } else if (req.query.dataOrigin === 'geolocation') {
-    //     console.log(req);
-    //     const weatherToday = await get_current_weather(req.coordinates);   // info = coordinates
-    //     const nextDaysWeather = await get_forecast(req.coordinates);
-    //     res.json({ weatherToday, nextDaysWeather });
-    // }
     const { coordinates, city } = req.body.data;
     var weatherToday = undefined;
     var nextDaysWeather = undefined;
@@ -163,15 +150,6 @@ app.post('/', async (req, res) => {
 
 app.get('/', async (req, res) => {
     res.set('Access-Control-Allow-Origin', '*');
-    // if (req.query.dataOrirgin === 'input') {
-
-    // } else if (req.query.dataOrirgin === 'geolocation') {
-    //     req.data
-    // }
-
-
-    // res.set('Access-Control-Allow-Origin', '*');
-    // const weatherData = await get_current_weather();
     res.json({loal: 'hkjhskdf'});
 });
 
