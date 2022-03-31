@@ -20,7 +20,6 @@ function App() {
 		weatherToday: undefined,
 		nextDaysWeather: undefined
 	});
-	const [iosError, setIosError] = useState(undefined);
 
 	
 	
@@ -86,11 +85,9 @@ function App() {
 			};
 			var returnedBackData = {};
 			try {
-				returnedBackData = await axios.post(`http://localhost:7600/`, fetchOptions);
+				returnedBackData = await axios.post(`/`, fetchOptions);
 				// returnedBackData = returnedBackData.json();
 			} catch (error) { // If there is an error in the POST process
-				setIosError(`${error}`);
-				console.log(iosError);
 				returnedBackData = { 
 					data: { 
 						weatherToday: 'Post request error', 
@@ -139,7 +136,6 @@ function App() {
 				geolocation_update={ newLocation => setUserLocation(newLocation) } 
 				update_city_name={ newName => setCityName(newName) } 
 				backendData={backendData}
-				iosError={ iosError }
 			/> 
 			{
 				(backendData.weatherToday !==  undefined 

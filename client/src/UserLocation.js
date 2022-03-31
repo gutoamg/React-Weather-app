@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import './typecity/typecitystyles.css'
 import loadingIcon from "./Loading_icon.png";
 
-const UserLocation = ({ geolocation_update, update_city_name, backendData, iosError }) => {
+const UserLocation = ({ geolocation_update, update_city_name, backendData }) => {
 	var firstRender = useRef(true);
 	var textInput = useRef(null);
 	const [inputValue, setInputValue] = useState('');
@@ -31,7 +31,9 @@ const UserLocation = ({ geolocation_update, update_city_name, backendData, iosEr
 	// If enter is pressed and there is an input,
 	// the input value is searched
 	const search_input_value = (event) => {
-		if (event.keyCode === 13 && textInput.current === '') {
+		if (event.keyCode === 13 && event.target.value === '') {
+			setInputValue("");
+			textInput.current.value = "";
 			return;
 		}
 		
@@ -48,7 +50,7 @@ const UserLocation = ({ geolocation_update, update_city_name, backendData, iosEr
 	// Clears input field or search what's already there
 	const input_clicked = (event) => {
 		if (event.target.className === "get-location__search-bar__search") {
-			if (textInput.current === "")
+			if (textInput.current.value === "")
 				return;
 			update_city_name(inputValue);
 			geolocation_update({
@@ -184,7 +186,6 @@ const UserLocation = ({ geolocation_update, update_city_name, backendData, iosEr
 				  </div> 
 				:<p style={{display: 'none'}}></p>
 			}
-			<p>{iosError}</p>
 		</div>
 	)
 }

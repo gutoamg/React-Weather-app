@@ -42,7 +42,7 @@ const get_current_weather = async (coordinates) => {
         currentDayWeather = await curResponse.json();
 
         if (curResponse.status < 200 || curResponse.status > 299)// Outside this scope is an error
-            throw new HttpError(curResponse);
+            throw new Error(curResponse);
         if (currentDayWeather === undefined)
             return undefined;
     } catch (err) { // If there was some http openWeather server error
@@ -61,7 +61,7 @@ const get_forecast = async (coordinates) => {
         forecastWeather = await forResponse.json();
 
         if (forResponse.status < 200 || forResponse.status > 299)// Outside this scope is an error
-            throw new HttpError(forResponse);
+            throw new Error(forResponse);
         if (forecastWeather === undefined)   
             return undefined;
     } catch (err) { // If there was some http openWeather server error
@@ -80,7 +80,7 @@ const get_coords_by_cityname = async (cityName) => {
         cityCoordinates = await response.json();
 
         if (response.status < 200 || response.status > 299)
-            throw new HttpError(response);
+            throw new Error(response);
         if (cityCoordinates[0] === undefined) { // Strange name input
             cityCoordinates = { // Impossible values, indicating there was an error
                 lat: 300,
@@ -110,8 +110,9 @@ const get_coords_by_cityname = async (cityName) => {
 
 
 app.post('/', async (req, res) => {
-    res.set('Access-Control-Allow-Origin', 'http://localhost:3000');
+    // res.set('Access-Control-Allow-Origin', 'http://localhost:3000');
 
+    if (req.body.data === undefined) return; // If there is no data
     const { coordinates, city } = req.body.data;
     var weatherToday = undefined;
     var nextDaysWeather = undefined;
@@ -149,8 +150,9 @@ app.post('/', async (req, res) => {
 });
 
 app.get('/', async (req, res) => {
-    res.set('Access-Control-Allow-Origin', '*');
-    res.json({loal: 'hkjhskdf'});
+    // res.set('Access-Control-Allow-Origin', '*');
+    res.send("DISCOVERED");
+    // res.json({loal: 'hkjhskdf'});
 });
 
 app.listen(PORT, (req, res) => {
@@ -159,3 +161,7 @@ app.listen(PORT, (req, res) => {
 
 // OBS:
 // Implement Promises.all to request weather
+
+// Commented the headers inside post and get
+// changed throw error inside functions from HttpError to Error
+// Added if statement in POST req beggining
