@@ -28,7 +28,7 @@ $main-text-color: #020411;
     top: 50%;
     left: 50%;
     padding: 35px 0px 15px 0px;
-    background-color: $dark-main-color;
+    background-color: transparent;
     border-radius: 10px;
     transition: all 200ms ease-in-out;
 
@@ -126,8 +126,8 @@ $main-text-color: #020411;
         left: 50%;
         margin-top: 30px;
         
-        color: $main-text-color;
-        // background-color: rgba($color: rgb(240, 240, 240), $alpha: 1);
+        // color: $main-text-color;
+        background-color: transparent;
         border-radius: 5px;
     
         &:focus, &:focus-visible {
@@ -160,15 +160,15 @@ $main-text-color: #020411;
                 outline: none;
             }
     
-            &:focus ~ .search-bar__clear {
-                background-color: rgba($color: rgb(230, 230, 230), $alpha: 1.0);
-            }
-            
             &:focus-visible {
                 border: none;
                 outline: none;
             }
-    
+
+            &:focus ~ .search-bar__clear {
+                background-color: rgba($color: rgb(230, 230, 230), $alpha: 1.0);
+            }
+            
             &:focus-visible ~ .search-bar__clear {
                 background-color: rgba($color: rgb(230, 230, 230), $alpha: 1.0);
             }
@@ -313,21 +313,29 @@ $main-text-color: #020411;
             background: transparent;
             backdrop-filter: blur(20px);
             background-color: rgba($color: rgb(240, 240, 240), $alpha: 1);
+
+            &:focus, &:focus-visible {
+                background-color: transparent;
+            }
             
             &__input {
-                background-color: rgba($color: rgb(240, 240, 240), $alpha: 0);
+                background-color: transparent;
 
-                &:focus, &:focus-visible {
-                    background-color: rgba($color: rgb(210, 210, 210), $alpha: 0);
+                &:focus {
+                    background-color: transparent;
+                }
+
+                &:focus-visible, &:focus-within {
+                    background-color: transparent;
                 }
             }
         
             &__clear {
-                background-color: rgba($color: rgb(240, 240, 240), $alpha: 0);
+                background-color: transparent;
             }
         
             &__search {
-                background-color: rgba($color: rgb(240, 240, 240), $alpha: 0);
+                background-color: transparent;
             }
         }
     }

@@ -22,7 +22,7 @@
   top: 50%;
   left: 50%;
   padding: 35px 0px 15px 0px;
-  background-color: rgba(32, 45, 131, 0);
+  background-color: transparent;
   border-radius: 10px;
   -webkit-transition: all 200ms ease-in-out;
   transition: all 200ms ease-in-out;
@@ -124,7 +124,7 @@
   top: 0%;
   left: 50%;
   margin-top: 30px;
-  color: #020411;
+  background-color: transparent;
   border-radius: 5px;
 }
 
@@ -159,13 +159,13 @@
   outline: none;
 }
 
-.get-location__search-bar__input:focus ~ .search-bar__clear {
-  background-color: #e6e6e6;
-}
-
 .get-location__search-bar__input:focus-visible {
   border: none;
   outline: none;
+}
+
+.get-location__search-bar__input:focus ~ .search-bar__clear {
+  background-color: #e6e6e6;
 }
 
 .get-location__search-bar__input:focus-visible ~ .search-bar__clear {
@@ -327,17 +327,23 @@
             backdrop-filter: blur(20px);
     background-color: #f0f0f0;
   }
-  .get-location__search-bar__input {
-    background-color: rgba(240, 240, 240, 0);
+  .get-location__search-bar:focus, .get-location__search-bar:focus-visible {
+    background-color: transparent;
   }
-  .get-location__search-bar__input:focus, .get-location__search-bar__input:focus-visible {
-    background-color: rgba(210, 210, 210, 0);
+  .get-location__search-bar__input {
+    background-color: transparent;
+  }
+  .get-location__search-bar__input:focus {
+    background-color: transparent;
+  }
+  .get-location__search-bar__input:focus-visible, .get-location__search-bar__input:focus-within {
+    background-color: transparent;
   }
   .get-location__search-bar__clear {
-    background-color: rgba(240, 240, 240, 0);
+    background-color: transparent;
   }
   .get-location__search-bar__search {
-    background-color: rgba(240, 240, 240, 0);
+    background-color: transparent;
   }
 }
 /*# sourceMappingURL=typecitystyles.css.map */
