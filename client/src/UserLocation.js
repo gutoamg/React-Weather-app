@@ -12,9 +12,10 @@ const UserLocation = ({ geolocation_update, update_city_name, backendData }) => 
 		lon: undefined
 	});
 	const [updater, setUpdater] = useState(1);
-	const [subtitleColor, setSubtitleColor] = useState('white');
+	const [subtitleColor, setSubtitleColor] = useState('#020411'); // #020411
 	const [isLoading, setIsLoading] = useState(false);
 	const [httpPostReqStatus, setHttpPostReqStatus] = useState('success');
+	const [searchBarBackgdColor, setSearchBarBackgdColor] = useState('rgba(255, 255, 255, 1)');
 
 	const update_input_value = (event) => {
 		setInputValue(event.target.value);
@@ -50,8 +51,7 @@ const UserLocation = ({ geolocation_update, update_city_name, backendData }) => 
 	// Clears input field or search what's already there
 	const input_clicked = (event) => {
 		if (event.target.className === "get-location__search-bar__search") {
-			if (textInput.current.value === "")
-				return;
+			if (textInput.current.value === "") return;
 			update_city_name(inputValue);
 			geolocation_update({
 				lat: undefined,
@@ -60,9 +60,12 @@ const UserLocation = ({ geolocation_update, update_city_name, backendData }) => 
 			setIsLoading(true);
 		} else if (event.target.className === "get-location__search-bar__clear") {
 			textInput.current.focus();
+			setSearchBarBackgdColor('rgba(255, 255, 255, 0.4)');
 			textInput.current.value = "";
 			setInputValue("");
 			update_city_name("");
+		} else {
+			setSearchBarBackgdColor('rgba(255, 255, 255, 0.4)');
 		}
 	}
 
@@ -142,9 +145,9 @@ const UserLocation = ({ geolocation_update, update_city_name, backendData }) => 
 	// When backend data changes
 	useEffect(() => {
 		if (backendData.weatherToday === 'Strange name input' || backendData.nextDaysWeather === 'Strange name input')
-			setSubtitleColor('rgb(248, 79, 79)');
+			setSubtitleColor('rgb(183, 34, 34)');
 		else
-			setSubtitleColor('white');
+			setSubtitleColor('#020411');
 		if (backendData.weatherToday === 'Post request error' || backendData.nextDaysWeather === 'Post request error')
 			setHttpPostReqStatus('failure');
 		else
@@ -154,38 +157,41 @@ const UserLocation = ({ geolocation_update, update_city_name, backendData }) => 
 	
 
 	return (
-		<div className="get-location">
-			<h1 className="get-location__type-city">Type a city</h1>
-			<p className="get-location__follow-model" style={{color: subtitleColor}}>
-				Follow the model 'São Paulo', including capital letters, spaces and accents
-			</p>
-			<div className="get-location__search-bar" onClick={input_clicked}>
-					<input 
-						id="search-input"
-						ref={textInput}
-						type="text" 
-						name="Discover city weather" 
-						placeholder="Type a city name" 
-						className="get-location__search-bar__input"
-						onChange={update_input_value}
-						onKeyUp={search_input_value}
-					/>
-                <label className="get-location__search-bar__label" htmlFor="search-input">
-				</label>
-                <button className="get-location__search-bar__search" type="submit"></button>
-                <button className="get-location__search-bar__clear" type="submit"></button>
-            </div>
-			<h3 className='get-location__or'>or instead...</h3>
-			<button className='get-location__button' onClick={ () => setUpdater(updater + 1) }>From your location</button>
-			<p className={geolocationClassName}>Your browser blocked location tracking, please check your permissions and settings or type city above</p> 
-			<p className={httpPostReqStatus === 'success' ? 'geoloc-err-hidden' : 'geoloc-err-showing'}>Server error, try again :(</p> 
-			{
-				isLoading
-				? <div className="get-location__loading-icon-container">
-					  <img src={loadingIcon} alt="Loading icon" className="get-location__loading-icon" />
-				  </div> 
-				:<p style={{display: 'none'}}></p>
-			}
+		<div className="get-location-container">
+			<div className="get-location">
+				<h1 className="get-location__type-city">Type a city</h1>
+				<p className="get-location__follow-model" style={{color: subtitleColor}}>
+					Follow the model 'São Paulo', including capital letters, spaces and accents
+				</p>
+				<div className="get-location__search-bar" onClick={input_clicked} style={{backgroundColor: `${searchBarBackgdColor}`}} >
+						<input 
+							id="search-input"
+							ref={textInput}
+							type="text" 
+							name="Discover city weather" 
+							placeholder="Type a city name" 
+							className="get-location__search-bar__input"
+							onChange={update_input_value}
+							onKeyUp={search_input_value}
+							onBlur={ () => setSearchBarBackgdColor('rgba(255, 255, 255, 1)') }
+						/>
+					<label className="get-location__search-bar__label" htmlFor="search-input">
+					</label>
+					<button className="get-location__search-bar__search" type="submit"></button>
+					<button className="get-location__search-bar__clear" type="submit"></button>
+				</div>
+				<h3 className='get-location__or'>or instead...</h3>
+				<button className='get-location__button' onClick={ () => setUpdater(updater + 1) }>From your location</button>
+				<p className={geolocationClassName}>Your browser blocked location tracking, please check your permissions and settings or type city above</p> 
+				<p className={httpPostReqStatus === 'success' ? 'geoloc-err-hidden' : 'geoloc-err-showing'}>Server error, try again :(</p> 
+				{
+					isLoading
+					? <div className="get-location__loading-icon-container">
+						<img src={loadingIcon} alt="Loading icon" className="get-location__loading-icon" />
+					</div> 
+					:<p style={{display: 'none'}}></p>
+				}
+			</div>
 		</div>
 	)
 }

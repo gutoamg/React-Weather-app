@@ -14,10 +14,24 @@
   top: 0px;
   left: 50%;
   padding: 35px 0px 0px 0px;
-  background-color: #020411;
+  background-color: transparent;
 }
 
-.weather-container .weather-target-city {
+.current-weather {
+  width: 100%;
+  height: auto;
+  position: relative;
+  -webkit-transform: translate(-50%, 0px);
+          transform: translate(-50%, 0px);
+  top: 0px;
+  left: 50%;
+  border-radius: 10px;
+  margin: 30px 0px 30px 0px;
+  padding: 25px 0px 25px 0px;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.current-weather .weather-target-city {
   width: 100%;
   font-family: "Playfair Display", serif;
   line-height: 45px;
@@ -27,7 +41,7 @@
   color: #3d3d3d;
 }
 
-.weather-container .weather-target-country {
+.current-weather .weather-target-country {
   width: 100%;
   margin-top: 10px;
   font-family: "Playfair Display", serif;
@@ -38,7 +52,7 @@
   color: #3d3d3d;
 }
 
-.weather-container .current-weather__main-temp {
+.current-weather__main-temp {
   width: 90%;
   height: auto;
   position: relative;
@@ -49,7 +63,7 @@
   margin: 15px 0px;
 }
 
-.weather-container .current-weather__main-temp h1 {
+.current-weather__main-temp h1 {
   width: 90%;
   position: relative;
   -webkit-transform: translateX(-48%);
@@ -61,10 +75,10 @@
   font-size: 220px;
   font-weight: 700;
   text-align: center;
-  color: #a0a0a0;
+  color: #020411;
 }
 
-.weather-container .current-weather__main-temp h3 {
+.current-weather__main-temp h3 {
   width: 100%;
   position: relative;
   margin-top: 10px;
@@ -76,16 +90,26 @@
   color: #3d3d3d;
 }
 
-.weather-container .current-weather__main-temp h2 {
+.current-weather__main-temp h2 {
   width: 100%;
   position: relative;
   margin-top: 35px;
-  margin-bottom: 50px;
   font-family: "Playfair Display", serif;
   line-height: 32px;
   font-size: 30px;
   font-weight: 400;
   text-align: center;
   color: #3d3d3d;
+}
+
+@supports ((-webkit-backdrop-filter: blur()) or (backdrop-filter: blur())) or (-webkit-backdrop-filter: blur()) {
+  .current-weather {
+    background: transparent;
+    -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px);
+    background-color: rgba(240, 240, 240, 0.4);
+    -webkit-box-shadow: inset 10px 10px 180px 20px rgba(255, 255, 255, 0.8);
+            box-shadow: inset 10px 10px 180px 20px rgba(255, 255, 255, 0.8);
+  }
 }
 /*# sourceMappingURL=weatherstyles.css.map */

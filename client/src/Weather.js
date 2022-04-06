@@ -8,11 +8,9 @@ const convert_temp_to = (kelvinTemp, convertTo) => {
 		case 'Celsius':
 			convertedTemp = kelvinTemp - 273.15;
 			break;
-
 		case 'Fahrenheit':
 			convertedTemp = ((kelvinTemp - 273.15) * 9 / 5) + 32;
 			break;
-	
 		default:
 			break;
 	}
@@ -59,6 +57,7 @@ const Weather = ({ backendData }) => {
 		temp: backendData.weatherToday.current.temp,
 		specificDescription: backendData.weatherToday.current.weather[0].description
 	});
+	let windowHeight = window.innerHeight;
 	
 
 	useEffect(() => {
@@ -69,13 +68,14 @@ const Weather = ({ backendData }) => {
 			temp: convertedTemperature,
 			specificDescription: backendData.weatherToday.current.weather[0].description
 		});
+		window.scroll(0, windowHeight)
 	}, [backendData]);
 
 	return (
 		<div className='weather-container'>
-			<h1 className="weather-target-city">{todayData.city}</h1>
-			<p className="weather-target-country">{todayData.country}</p>
 			<div className="current-weather">
+				<h1 className="weather-target-city">{todayData.city}</h1>
+				<p className="weather-target-country">{todayData.country}</p>
 				<div className='current-weather__main-temp'>
 					<h1>{todayData.temp}°</h1>
 					<h3>Celsius</h3>
